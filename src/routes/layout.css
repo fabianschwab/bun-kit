@@ -1,7 +1,8 @@
-@layer carbon, utilities;
+@layer theme, base, components, carbon, utilities;
 
-/* @import 'carbon-components-svelte/css/all.css' layer(carbon); */
-@tailwind utilities;
+@import 'tailwindcss/theme.css' layer(theme);
+@import 'tailwindcss/preflight.css' layer(base);
+@import 'tailwindcss/utilities.css' layer(utilities);
 
 :root {
 	color-scheme: light dark;
