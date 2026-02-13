@@ -1,0 +1,4 @@
+@layer carbon, utilities;
+
+@import 'carbon-components-svelte/css/all.css' layer(carbon);
+@tailwind utilities;
