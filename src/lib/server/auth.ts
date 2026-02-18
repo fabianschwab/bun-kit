@@ -4,17 +4,35 @@ import { sveltekitCookies } from 'better-auth/svelte-kit';
 import { env } from '$env/dynamic/private';
 import { getRequestEvent } from '$app/server';
 import { db } from '$lib/server/db';
+import { genericOAuth } from "better-auth/plugins/generic-oauth";
 
 export const auth = betterAuth({
 	baseURL: env.ORIGIN,
 	secret: env.BETTER_AUTH_SECRET,
 	database: drizzleAdapter(db, { provider: 'sqlite' }),
-	emailAndPassword: { enabled: true },
-	socialProviders: {
-		github: {
-			clientId: env.GITHUB_CLIENT_ID,
-			clientSecret: env.GITHUB_CLIENT_SECRET
-		}
-	},
-	plugins: [sveltekitCookies(getRequestEvent)] // make sure this is the last plugin in the array
+	plugins: [
+        genericOAuth({
+            config: [
+                {
+                    providerId: "appid",
+                    clientId: env.OAUTH_CLIENT_ID as string,
+                    clientSecret: env.OAUTH_CLIENT_SECRET as string,
+                    discoveryUrl: env.OAUTH_DISCOVERY_URL as string
+                }
+            ]
+        }),
+        sveltekitCookies(getRequestEvent)
+    ],
+    session: {
+        cookieCache: {
+            enabled: true,
+            maxAge: 5 * 60 // 5 min cache duration in seconds (reduces the db calls)
+        },
+        expiresIn: 60 * 60 * 24 * 7, // 7 days
+        updateAge: 60 * 60 * 24 // 1 day (every 1 day the session expiration is updated)
+    },
+    rateLimit: {
+        window: 10, // time window in seconds
+        max: 100 // max requests in the window
+    }
 });
