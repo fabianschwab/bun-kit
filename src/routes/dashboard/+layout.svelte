@@ -1,14 +1,14 @@
 <script lang="ts">
-	import LogoutButton from '$lib/components/LogoutButton.svelte';
-
-	let { children, data } = $props();
-
+	import { route } from '$lib/ROUTES';
 	import {
 		Column,
 		Content,
 		Grid,
 		Header,
 		HeaderAction,
+		HeaderPanelDivider,
+		HeaderPanelLinks,
+		HeaderPanelLink,
 		HeaderUtilities,
 		NotificationQueue,
 		Row,
@@ -16,7 +16,9 @@
 		Stack
 	} from 'carbon-components-svelte';
 	import { UserAvatarFilledAlt } from 'carbon-icons-svelte';
+	import LogoutButton from '$lib/components/LogoutButton.svelte';
 
+	let { children, data } = $props();
 	let queue: NotificationQueue;
 	let isOpen = $state(false);
 
@@ -41,8 +43,13 @@
 					<h1>Welcome,</h1>
 					<h3>{data.user.name}</h3>
 				</div>
+
 				<LogoutButton />
 			</div>
+			<HeaderPanelLinks>
+				<HeaderPanelDivider>Quick Settings</HeaderPanelDivider>
+				<HeaderPanelLink href={route('/dashboard/tasks')}>Tasks</HeaderPanelLink>
+			</HeaderPanelLinks>
 		</HeaderAction>
 	</HeaderUtilities>
 </Header>
