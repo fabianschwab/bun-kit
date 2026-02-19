@@ -1,6 +1,14 @@
-import { is } from 'drizzle-orm';
 import { integer, sqliteTable, text } from 'drizzle-orm/sqlite-core';
-import { isCommaListExpression } from 'typescript';
+import { sql } from 'drizzle-orm';
+
+const timestamps = {
+	createdAt: integer('created_at', { mode: 'timestamp_ms' })
+		.default(sql`(cast(unixepoch('subsecond') * 1000 as integer))`)
+		.notNull(),
+	updatedAt: integer('updated_at', { mode: 'timestamp_ms' })
+		.$onUpdate(() => /* @__PURE__ */ new Date())
+		.notNull()
+};
 
 export const task = sqliteTable('task', {
 	id: text('id')
@@ -8,10 +16,8 @@ export const task = sqliteTable('task', {
 		.$defaultFn(() => crypto.randomUUID()),
 	title: text('title').notNull(),
 	priority: integer('priority').notNull().default(1),
-	createdAt: integer('created_at', { mode: 'timestamp' })
-		.notNull()
-		.$defaultFn(() => new Date()),
-	completed: integer('completed', { mode: 'boolean' }).notNull().default(false)
+	completed: integer('completed', { mode: 'boolean' }).notNull().default(false),
+	...timestamps
 });
 
 export * from './auth.schema';
