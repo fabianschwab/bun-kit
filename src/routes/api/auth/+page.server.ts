@@ -1,8 +1,8 @@
 import { fail, redirect } from '@sveltejs/kit';
 import type { Actions } from './$types';
-import type { PageServerLoad } from './$types';
 import { auth } from '$lib/server/auth';
 
+// Using form actions because this will work also while javascript is turned off
 export const actions: Actions = {
 	login: async (event) => {
 		const formData = await event.request.formData();
