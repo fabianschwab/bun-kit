@@ -19,7 +19,7 @@
 </Form>
 <h3>Task list</h3>
 <svelte:boundary>
-	{#each await getTasks() as { id, title, completed, updatedAt, priority }}
+	{#each await getTasks() as { id, title, completed, updatedAt }}
 		{#key id}
 			<Tile class="flex items-center  gap-2">
 				<Checkbox
