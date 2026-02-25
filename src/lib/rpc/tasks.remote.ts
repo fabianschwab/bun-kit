@@ -15,14 +15,19 @@ export const createTask = form(
 		title: z.string()
 	}),
 	async (data) => {
-		await db.insert(task).values({ title: data.title });
+		try {
+			await db.insert(task).values({ title: data.title }).returning({ id: task.id });
+		} catch (e) {
+			console.error(e);
+			error(500, 'Could not create task.');
+		}
 	}
 );
 
 export const toggleComplated = command(z.string(), async (id) => {
 	const taskToUpdate = db.select().from(task).where(eq(task.id, id)).get();
 	if (!taskToUpdate) {
-		error(404, 'Task not found');
+		error(404, 'Could not update task. Task not found.');
 	}
 	await db.update(task).set({ completed: !taskToUpdate.completed }).where(eq(task.id, id));
 });
@@ -30,7 +35,7 @@ export const toggleComplated = command(z.string(), async (id) => {
 export const deleteTask = command(z.string(), async (id) => {
 	const taskToDelete = db.select().from(task).where(eq(task.id, id)).get();
 	if (!taskToDelete) {
-		error(404, 'Task not found');
+		error(404, 'Could not delete task. Task not found.');
 	}
 	await db.delete(task).where(eq(task.id, id));
 });

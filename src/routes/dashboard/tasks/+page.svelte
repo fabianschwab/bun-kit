@@ -1,9 +1,29 @@
-<script>
+<script lang="ts">
 	import { Button, Checkbox, Form, InlineLoading, TextInput, Tile } from 'carbon-components-svelte';
 
 	import { createTask, deleteTask, getTasks, toggleComplated } from '$lib/rpc/tasks.remote';
 	import { TrashCan } from 'carbon-icons-svelte';
 	import { FaceMelting } from 'carbon-pictograms-svelte';
+	import { isHttpError } from '@sveltejs/kit';
+	import { getNotificationCenterState } from '$lib/components/NotificationCenterState.svelte';
+
+	async function handleDeleteTask(id: string) {
+		try {
+			await deleteTask(id).updates(getTasks());
+		} catch (error) {
+			if (isHttpError(error)) {
+				center.addNotification({ kind: 'error', title: 'Error', subtitle: error.body.message });
+			} else {
+				center.addNotification({
+					kind: 'error',
+					title: 'Error',
+					subtitle: 'Could not connect to server!'
+				});
+			}
+		}
+	}
+
+	let center = getNotificationCenterState();
 </script>
 
 <h1>Tasks</h1>
@@ -36,7 +56,7 @@
 					iconDescription="Delete task"
 					kind="danger-ghost"
 					icon={TrashCan}
-					on:click={() => deleteTask(id).updates(getTasks())}
+					on:click={() => handleDeleteTask(id)}
 				/>
 			</Tile>
 		{/key}
