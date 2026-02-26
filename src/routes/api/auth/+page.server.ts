@@ -1,10 +1,11 @@
 import { fail, redirect } from '@sveltejs/kit';
 import type { Actions } from './$types';
-import { auth } from '$lib/server/auth';
+import { getAuth } from '$lib/server/auth';
 
 // Using form actions because this will work also while javascript is turned off
 export const actions: Actions = {
 	login: async (event) => {
+		const auth = getAuth();
 		const formData = await event.request.formData();
 		const provider = formData.get('provider')?.toString();
 
@@ -27,6 +28,7 @@ export const actions: Actions = {
 		return fail(400, { message: 'Social sign-in failed' });
 	},
 	logout: async (event) => {
+		const auth = getAuth();
 		await auth.api.signOut({ headers: event.request.headers });
 		return redirect(302, '/');
 	}
