@@ -1,0 +1,10 @@
+{
+	"mcpServers": {
+		"Svelte and Sveltekit": {
+			"type": "sse",
+			"url": "https://svelte-llm.stanislav.garden/mcp/sse",
+			"alwaysAllow": ["list_sections", "get_documentation"],
+			"disabled": false
+		}
+	}
+}
