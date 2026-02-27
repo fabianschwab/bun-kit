@@ -32,6 +32,9 @@ COPY --from=install /temp/prod/node_modules node_modules
 COPY --from=prerelease /usr/src/app/build build
 COPY --from=prerelease /usr/src/app/package.json .
 
+# Create data directory and set permissions
+RUN mkdir -p /usr/src/app/data && chown -R bun:bun /usr/src/app
+
 # run the app
 USER bun
 EXPOSE 3000/tcp
