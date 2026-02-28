@@ -1,16 +1,1 @@
-{
-	"mcpServers": {
-		"Svelte and Sveltekit": {
-			"type": "sse",
-			"url": "https://svelte-llm.stanislav.garden/mcp/sse",
-			"alwaysAllow": ["list_sections", "get_documentation"],
-			"disabled": true
-		},
-		"svelte": {
-			"type": "streamable-http",
-			"url": "https://mcp.svelte.dev/mcp",
-			"disabled": false,
-			"alwaysAllow": ["list-sections", "get-documentation"]
-		}
-	}
-}
+{"mcpServers":{"Svelte and Sveltekit":{"type":"sse","url":"https://svelte-llm.stanislav.garden/mcp/sse","alwaysAllow":["list_sections","get_documentation"],"disabled":true},"svelte":{"type":"streamable-http","url":"https://mcp.svelte.dev/mcp","disabled":false,"alwaysAllow":["list-sections","get-documentation","svelte-autofixer","playground-link"]}}}
