@@ -10,6 +10,12 @@
 	async function handleDeleteTask(id: string) {
 		try {
 			await deleteTask(id).updates(getTasks());
+			center.addNotification({
+				kind: 'success',
+				title: 'Success',
+				subtitle: 'Task deleted from database.',
+				caption: new Date().toDateString()
+			});
 		} catch (error) {
 			if (isHttpError(error)) {
 				center.addNotification({ kind: 'error', title: 'Error', subtitle: error.body.message });
@@ -17,7 +23,8 @@
 				center.addNotification({
 					kind: 'error',
 					title: 'Error',
-					subtitle: 'Could not connect to server!'
+					subtitle: 'Could not connect to server!',
+					caption: new Date().toDateString()
 				});
 			}
 		}
@@ -33,9 +40,31 @@
 	tailwindcss when creating custom css classes.
 </p>
 <h3>Creaet a new task</h3>
-<Form {...createTask} class="flex items-end">
+<Form
+	{...createTask.enhance(async ({ form, data, submit }) => {
+		try {
+			await submit();
+			form.reset();
+
+			center.addNotification({
+				kind: 'success',
+				title: 'Task added',
+				subtitle: 'Your task was saved to the database.',
+				caption: new Date().toDateString()
+			});
+		} catch (e) {
+			center.addNotification({
+				kind: 'error',
+				title: 'Could not add task!',
+				subtitle: 'Task could not be saved. Please try again.',
+				caption: new Date().toDateString()
+			});
+		}
+	})}
+	class="flex items-end"
+>
 	<TextInput labelText="Task description" {...createTask.fields.title.as('text')} />
-	<Button type="submit" size="field" disabled={!!createTask.pending}>Create Task</Button>
+	<Button type="submit" size="field">Create Task</Button>
 </Form>
 <h3>Task list</h3>
 <svelte:boundary>
