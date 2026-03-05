@@ -18,6 +18,7 @@ export type Notification = {
 class NotificationCenterState {
 	notifications = $state<Notification[]>([]);
 	idCounter = $state(0);
+	showInReverse = $state(false);
 
 	addNotification(notification: Notification) {
 		const id = notification.id ?? `notification-${this.idCounter++}`;
@@ -26,7 +27,11 @@ class NotificationCenterState {
 			return id;
 		}
 
-		this.notifications.push({ ...notification, id });
+		if (this.showInReverse) {
+			this.notifications.push({ ...notification, id });
+		} else {
+			this.notifications = [{ ...notification, id }, ...this.notifications];
+		}
 
 		return id;
 	}
@@ -51,7 +56,8 @@ export const getNotificationCenterState = (key = DEFAULT_KEY) => {
 	return getContext<NotificationCenterState>(key);
 };
 
-export const setNotificationCenterState = (key = DEFAULT_KEY) => {
+export const setNotificationCenterState = (reverse = false, key = DEFAULT_KEY) => {
 	const notificationCenter = new NotificationCenterState();
+	notificationCenter.showInReverse = reverse;
 	return setContext(key, notificationCenter);
 };
