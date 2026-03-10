@@ -14,7 +14,8 @@
 				kind: 'success',
 				title: 'Success',
 				subtitle: 'Task deleted from database.',
-				caption: new Date().toDateString()
+				caption: new Date().toDateString(),
+				timeout: 1500
 			});
 		} catch (error) {
 			if (isHttpError(error)) {
@@ -24,7 +25,8 @@
 					kind: 'error',
 					title: 'Error',
 					subtitle: 'Could not connect to server!',
-					caption: new Date().toDateString()
+					caption: new Date().toDateString(),
+					timeout: 1500
 				});
 			}
 		}
@@ -50,14 +52,16 @@
 				kind: 'success',
 				title: 'Task added',
 				subtitle: 'Your task was saved to the database.',
-				caption: new Date().toDateString()
+				caption: new Date().toDateString(),
+				timeout: 1500
 			});
 		} catch (e) {
 			center.addNotification({
 				kind: 'error',
 				title: 'Could not add task!',
 				subtitle: 'Task could not be saved. Please try again.',
-				caption: new Date().toDateString()
+				caption: new Date().toDateString(),
+				timeout: 1500
 			});
 		}
 	})}

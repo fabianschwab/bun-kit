@@ -37,7 +37,6 @@
 					<h1>Welcome,</h1>
 					<h3>{data.user.name}</h3>
 				</div>
-
 				<LogoutButton />
 			</div>
 			<HeaderPanelLinks>
