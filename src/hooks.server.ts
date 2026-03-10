@@ -14,7 +14,16 @@ const handleBetterAuth: Handle = async ({ event, resolve }) => {
 		event.locals.user = session.user;
 	}
 
-	return svelteKitHandler({ event, resolve, auth, building });
+	const response = await svelteKitHandler({ event, resolve, auth, building });
+
+	// Prevent caching of authenticated pages
+	if (event.url.pathname.startsWith('/dashboard')) {
+		response.headers.set('Cache-Control', 'no-store, no-cache, must-revalidate, proxy-revalidate');
+		response.headers.set('Pragma', 'no-cache');
+		response.headers.set('Expires', '0');
+	}
+
+	return response;
 };
 
 export const handle: Handle = handleBetterAuth;
