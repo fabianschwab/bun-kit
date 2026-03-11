@@ -12,7 +12,8 @@ const PAGES = {
   "/": `/`,
   "/dashboard": `/dashboard`,
   "/dashboard/one": `/dashboard/one`,
-  "/dashboard/tasks": `/dashboard/tasks`
+  "/dashboard/tasks": `/dashboard/tasks`,
+  "/stt-tts": `/stt-tts`
 }
 
 /**
@@ -142,7 +143,7 @@ export function route<T extends keyof AllTypes>(key: T, ...params: any[]): strin
 * ```
 */
 export type KIT_ROUTES = {
-  PAGES: { '/': never, '/dashboard': never, '/dashboard/one': never, '/dashboard/tasks': never }
+  PAGES: { '/': never, '/dashboard': never, '/dashboard/one': never, '/dashboard/tasks': never, '/stt-tts': never }
   SERVERS: Record<string, never>
   ACTIONS: { 'login /api/auth': never, 'logout /api/auth': never }
   LINKS: Record<string, never>
