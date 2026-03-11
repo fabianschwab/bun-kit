@@ -9,12 +9,8 @@
         "carbon-icons-svelte": "^13.8.0",
         "carbon-pictograms-svelte": "^13.14.0",
         "drizzle-orm": "^0.45.1",
-<<<<<<< HEAD
         "ibm-watson": "^12.2.0",
-        "zod": "^4.3.6",
-=======
         "zod": "^4.3.6"
->>>>>>> 6f07ee8 (example)
       },
       "devDependencies": {
         "@eslint/compat": "^2.0.2",
