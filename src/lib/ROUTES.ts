@@ -26,8 +26,7 @@ const SERVERS = {
  * ACTIONS
  */
 const ACTIONS = {
-  "login /api/auth": `/api/auth?/login`,
-  "logout /api/auth": `/api/auth?/logout`
+  
 }
 
 /**
@@ -144,7 +143,7 @@ export function route<T extends keyof AllTypes>(key: T, ...params: any[]): strin
 export type KIT_ROUTES = {
   PAGES: { '/': never, '/dashboard': never, '/dashboard/one': never, '/dashboard/tasks': never }
   SERVERS: Record<string, never>
-  ACTIONS: { 'login /api/auth': never, 'logout /api/auth': never }
+  ACTIONS: Record<string, never>
   LINKS: Record<string, never>
   Params: Record<string, never>
 }
