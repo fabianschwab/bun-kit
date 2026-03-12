@@ -26,7 +26,7 @@
 	setNotificationCenterState();
 </script>
 
-<Header href="/" companyName="IBM" platformName="Carbon Svelte">
+<Header href={route('/')} companyName="IBM" platformName="Carbon Svelte">
 	<svelte:fragment slot="skipToContent">
 		<SkipToContent />
 	</svelte:fragment>
