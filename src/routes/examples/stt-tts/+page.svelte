@@ -34,7 +34,7 @@
 		const SpeechRecognition =
 			(window as any).SpeechRecognition || (window as any).webkitSpeechRecognition;
 
-		if (!SpeechRecognition) {
+		if (SpeechRecognition) {
 			recognition = new SpeechRecognition();
 			recognition.continuous = true;
 			recognition.interimResults = true;
@@ -64,7 +64,7 @@
 			recognition.onend = () => {
 				isRecording = false;
 			};
-
+		} else {
 			errorMessage = 'Speech Recognition is not supported in this browser.';
 		}
 
@@ -173,9 +173,6 @@
 
 	<Toolbar>
 		<ToolbarContent>
-			<ToolbarMenu>
-				<ToolbarMenuItem on:click={() => (open = true)}>Language Settings</ToolbarMenuItem>
-			</ToolbarMenu>
 			<Button kind="danger" icon={TrashCan} on:click={() => (textToSpeak = defaultText)}
 				>Clear Content</Button
 			>
