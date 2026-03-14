@@ -11,7 +11,7 @@
 		ToolbarMenuItem
 	} from 'carbon-components-svelte';
 	import { onMount } from 'svelte';
-	import { TrashCan, Microphone, StopOutline, VolumeUp } from 'carbon-icons-svelte';
+	import { TrashCan, Microphone, StopOutline, VolumeUp, Copy } from 'carbon-icons-svelte';
 
 	// Type declarations for Web Speech API
 	type SpeechRecognition = any;
@@ -156,6 +156,9 @@
 			</ToolbarMenu>
 			<Button kind="danger" icon={TrashCan} on:click={() => (transcribedText = '')}
 				>Clear Content</Button
+			>
+			<Button kind="secondary" icon={Copy} on:click={() => (textToSpeak = transcribedText)}
+				>Copy to speach field</Button
 			>
 			<Button icon={isRecording ? StopOutline : Microphone} on:click={toggleRecording}>
 				{isRecording ? 'Stop Recording' : 'Start Recording'}
