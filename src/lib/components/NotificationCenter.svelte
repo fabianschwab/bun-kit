@@ -1,7 +1,6 @@
 <script lang="ts">
 	import { getNotificationCenterState } from '$lib/components/NotificationCenterState.svelte';
 	import { ToastNotification } from 'carbon-components-svelte';
-	import { flip } from 'svelte/animate';
 
 	const notificationCenterState = getNotificationCenterState();
 
@@ -23,12 +22,10 @@
 		style:z-index={zIndex}
 	>
 		{#each notificationCenterState.notifications as notification (notification.id)}
-			<div animate:flip>
-				<ToastNotification
-					{...notification}
-					on:close={() => notificationCenterState.removeNotification(notification.id!)}
-				/>
-			</div>
+			<ToastNotification
+				{...notification}
+				on:close={() => notificationCenterState.removeNotification(notification.id!)}
+			/>
 		{/each}
 	</div>
 {/if}
