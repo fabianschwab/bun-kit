@@ -173,6 +173,9 @@
 
 	<Toolbar>
 		<ToolbarContent>
+			<ToolbarMenu>
+				<ToolbarMenuItem on:click={() => (open = true)}>Language Settings</ToolbarMenuItem>
+			</ToolbarMenu>
 			<Button kind="danger" icon={TrashCan} on:click={() => (textToSpeak = defaultText)}
 				>Clear Content</Button
 			>
@@ -191,7 +194,14 @@
 	modalHeading="Language Setting"
 >
 	<p>Select the language for speech recognition and synthesis.</p>
-	<Select bind:selected={language} placeholder="Select language">
+	<Select
+		on:change={() => {
+			recognition.stop();
+			recognition.lang = language;
+		}}
+		bind:selected={language}
+		placeholder="Select language"
+	>
 		<option value="en-US">English (US)</option>
 		<option value="de-DE">German (Germany)</option>
 		<option value="fr-FR">French (France)</option>
