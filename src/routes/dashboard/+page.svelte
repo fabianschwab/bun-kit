@@ -12,6 +12,11 @@
 		here: <a href={route('/examples/stt-tts')}>STT / TTS</a>
 	</li>
 	<li>
+		A example for speach to text and text to speach with IBM Watson Services: <a
+			href={route('/examples/watson-stt-tts')}>Watson STT / TTS</a
+		>
+	</li>
+	<li>
 		Streaming a data to the browser is implemented here: <a href={route('/examples/show-temp')}
 			>Streaming temperature</a
 		>
