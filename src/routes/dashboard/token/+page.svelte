@@ -21,8 +21,8 @@
 
 <h1>Token</h1>
 <p>
-	If the is a need for JWT bassed authentication, read the developeer notes in the source repositroy
-	under `/src/routes/dashboard/token/jwt_bearer_setup.md`
+	If there is a need for JWT bassed authentication, read the developer notes in the source
+	repositroy under `/src/routes/dashboard/token/jwt_bearer_setup.md`
 </p>
 <div class="flex gap-4">
 	<Button kind="tertiary" icon={Copy} hideTooltip on:click={() => copyToClipboard()} />
