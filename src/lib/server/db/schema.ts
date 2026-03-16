@@ -20,4 +20,12 @@ export const task = sqliteTable('task', {
 	...timestamps
 });
 
+export const jwks = sqliteTable('jwks', {
+	id: text('id').primaryKey(),
+	publicKey: text('public_key').notNull(),
+	privateKey: text('private_key').notNull(),
+	createdAt: integer('created_at', { mode: 'timestamp_ms' }).notNull(),
+	expiresAt: integer('expires_at', { mode: 'timestamp_ms' })
+});
+
 export * from './auth.schema';
