@@ -5,7 +5,7 @@ import { env } from '$env/dynamic/private';
 import { getRequestEvent } from '$app/server';
 import { db } from '$lib/server/db';
 import { genericOAuth } from 'better-auth/plugins/generic-oauth';
-import { jwt } from 'better-auth/plugins';
+import { jwt, openAPI } from 'better-auth/plugins';
 
 let _auth: ReturnType<typeof betterAuth> | null = null;
 export function getAuth() {
@@ -32,6 +32,7 @@ export function getAuth() {
 				]
 			}),
 			jwt(),
+			openAPI(),
 			sveltekitCookies(() => getRequestEvent())
 		],
 		session: {

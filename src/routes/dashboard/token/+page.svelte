@@ -24,6 +24,10 @@
 	If there is a need for JWT bassed authentication, read the developer notes in the source
 	repositroy under `/src/routes/dashboard/token/jwt_bearer_setup.md`
 </p>
+<p>
+	With the plugin jwt from better auth there is an endpoint `/api/auth/token` that returns a JWT
+	token.
+</p>
 <div class="flex gap-4">
 	<Button kind="tertiary" icon={Copy} hideTooltip on:click={() => copyToClipboard()} />
 	<div class="max-w-md border border-dashed p-4 break-all whitespace-pre-wrap">{data.token}</div>
