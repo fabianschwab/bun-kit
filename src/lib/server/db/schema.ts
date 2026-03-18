@@ -21,12 +21,14 @@ export const task = pgTable('task', {
 	...timestamps
 });
 
-export const jwks = sqliteTable('jwks', {
+export const jwks = pgTable('jwks', {
 	id: text('id').primaryKey(),
 	publicKey: text('public_key').notNull(),
 	privateKey: text('private_key').notNull(),
-	createdAt: integer('created_at', { mode: 'timestamp_ms' }).notNull(),
-	expiresAt: integer('expires_at', { mode: 'timestamp_ms' })
+	createdAt: timestamp('created_at', { mode: 'date' })
+		.notNull()
+		.default(sql`now()`),
+	expiresAt: timestamp('expires_at', { mode: 'date' })
 });
 
 export * from './auth.schema';

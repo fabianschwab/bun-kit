@@ -53,6 +53,7 @@
 		"carbon-pictograms-svelte": "^13.14.0",
 		"drizzle-orm": "^0.45.1",
 		"ibm-watson": "^12.2.0",
+		"postgres": "^3.4.8",
 		"zod": "^4.3.6"
 	}
 }
