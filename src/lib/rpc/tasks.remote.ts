@@ -38,7 +38,7 @@ export const createTask = form(
 
 export const toggleComplated = command(z.string(), async (id) => {
 	requireAuthentication();
-	const taskToUpdate = db.select().from(task).where(eq(task.id, id)).get();
+	const [taskToUpdate] = await db.select().from(task).where(eq(task.id, id));
 	if (!taskToUpdate) {
 		error(404, 'Could not update task. Task not found.');
 	}
@@ -47,7 +47,7 @@ export const toggleComplated = command(z.string(), async (id) => {
 
 export const deleteTask = command(z.string(), async (id) => {
 	requireAuthentication();
-	const taskToDelete = db.select().from(task).where(eq(task.id, id)).get();
+	const [taskToDelete] = await db.select().from(task).where(eq(task.id, id));
 	if (!taskToDelete) {
 		error(404, 'Could not delete task. Task not found.');
 	}

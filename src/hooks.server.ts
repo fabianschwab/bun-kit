@@ -3,7 +3,7 @@ import { building } from '$app/environment';
 import { getAuth } from '$lib/server/auth';
 import { svelteKitHandler } from 'better-auth/svelte-kit';
 import '$lib/server/shutdown';
-import { checkConnection } from '$lib/server/db';
+import { checkConnection, checkSchema } from '$lib/server/db';
 
 const handleBetterAuth: Handle = async ({ event, resolve }) => {
 	const auth = getAuth();
@@ -32,4 +32,7 @@ export const init: ServerInit = async () => {
 	console.log('Application startup ...');
 	await checkConnection();
 	console.log('Database connection established.');
+	console.log('Checking schema and running migrations if needed...');
+	await checkSchema();
+	console.log('Schema is ready.');
 };

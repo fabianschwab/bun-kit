@@ -1,22 +1,23 @@
-import { integer, sqliteTable, text } from 'drizzle-orm/sqlite-core';
+import { pgTable, text, integer, boolean, timestamp } from 'drizzle-orm/pg-core';
 import { sql } from 'drizzle-orm';
 
 const timestamps = {
-	createdAt: integer('created_at', { mode: 'timestamp_ms' })
-		.default(sql`(cast(unixepoch('subsecond') * 1000 as integer))`)
+	createdAt: timestamp('created_at', { mode: 'date' })
+		.default(sql`now()`)
 		.notNull(),
-	updatedAt: integer('updated_at', { mode: 'timestamp_ms' })
+	updatedAt: timestamp('updated_at', { mode: 'date' })
+		.default(sql`now()`)
 		.$onUpdate(() => /* @__PURE__ */ new Date())
 		.notNull()
 };
 
-export const task = sqliteTable('task', {
+export const task = pgTable('task', {
 	id: text('id')
 		.primaryKey()
 		.$defaultFn(() => crypto.randomUUID()),
 	title: text('title').notNull(),
 	priority: integer('priority').notNull().default(1),
-	completed: integer('completed', { mode: 'boolean' }).notNull().default(false),
+	completed: boolean('completed').notNull().default(false),
 	...timestamps
 });
 
