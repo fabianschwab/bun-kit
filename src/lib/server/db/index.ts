@@ -18,20 +18,25 @@ let dbInstance: ReturnType<typeof drizzle> | null = null;
 function initializeDb() {
 	if (dbInstance) return dbInstance;
 
-	// Read the certificate file at runtime
-	const certPath = join(process.cwd(), '/cert/postgresql.crt');
-	const cert = readFileSync(certPath, 'utf8');
+	try {
+		// Read the certificate file at runtime
+		const certPath = join(process.cwd(), '/cert/postgresql.crt');
+		const cert = readFileSync(certPath, 'utf8');
 
-	// Configure PostgreSQL connection with SSL certificate
-	pg = new SQL(env.DATABASE_URL || '', {
-		tls: {
-			ca: cert,
-			rejectUnauthorized: true
-		}
-	});
-
-	dbInstance = drizzle(pg, { schema });
-	return dbInstance;
+		// Configure PostgreSQL connection with SSL certificate
+		pg = new SQL(env.DATABASE_URL, {
+			tls: {
+				ca: cert,
+				rejectUnauthorized: true
+			}
+		});
+		dbInstance = drizzle(pg, { schema });
+		return dbInstance;
+	} catch (error) {
+		console.error('Error reading SSL certificate:', error);
+		// Terminate application
+		process.exit(1);
+	}
 }
 
 export const db = new Proxy({} as ReturnType<typeof drizzle>, {

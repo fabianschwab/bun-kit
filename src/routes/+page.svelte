@@ -5,5 +5,4 @@
 
 <div class="flex h-screen flex-col items-center justify-center">
 	<Welcome />
-	<p class="mt-8">See some examples <a href={route('/examples')}>here</a></p>
 </div>

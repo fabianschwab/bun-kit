@@ -11,22 +11,17 @@
 const PAGES = {
   "/": `/`,
   "/dashboard": `/dashboard`,
-  "/dashboard/one": `/dashboard/one`,
   "/dashboard/tasks": `/dashboard/tasks`,
   "/dashboard/token": `/dashboard/token`,
   "/examples": `/examples`,
-  "/examples/client-side-stt-tts": `/examples/client-side-stt-tts`,
-  "/examples/show-temp": `/examples/show-temp`,
-  "/examples/stt-tts": `/examples/stt-tts`,
-  "/examples/watson-stt-tts": `/examples/watson-stt-tts`
+  "/examples/show-temp": `/examples/show-temp`
 }
 
 /**
  * SERVERS
  */
 const SERVERS = {
-  "GET /api/stream/temperature": `/api/stream/temperature`,
-  "POST /examples/watson-stt-tts": `/examples/watson-stt-tts`
+  "GET /api/stream/temperature": `/api/stream/temperature`
 }
 
 /**
@@ -148,8 +143,8 @@ export function route<T extends keyof AllTypes>(key: T, ...params: any[]): strin
 * ```
 */
 export type KIT_ROUTES = {
-  PAGES: { '/': never, '/dashboard': never, '/dashboard/one': never, '/dashboard/tasks': never, '/dashboard/token': never, '/examples': never, '/examples/client-side-stt-tts': never, '/examples/show-temp': never, '/examples/stt-tts': never, '/examples/watson-stt-tts': never }
-  SERVERS: { 'GET /api/stream/temperature': never, 'POST /examples/watson-stt-tts': never }
+  PAGES: { '/': never, '/dashboard': never, '/dashboard/tasks': never, '/dashboard/token': never, '/examples': never, '/examples/show-temp': never }
+  SERVERS: { 'GET /api/stream/temperature': never }
   ACTIONS: Record<string, never>
   LINKS: Record<string, never>
   Params: Record<string, never>
