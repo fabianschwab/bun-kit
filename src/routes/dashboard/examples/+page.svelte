@@ -4,9 +4,9 @@
 
 <h1>Examples</h1>
 <p>Gets dyamically updated as new routes are made.</p>
-<ul>
+<ul class="mt-4 list-inside list-disc">
 	{#each routes as route}
-		{#if route.startsWith('/examples/')}
+		{#if route.startsWith('/dashboard/examples/')}
 			<li><a href={route}>{route}</a></li>
 		{/if}
 	{/each}
