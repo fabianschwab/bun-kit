@@ -26,5 +26,5 @@ vite.config.ts.timestamp-*
 *.db-shm
 *.db-wal
 /data
-
-drizzle/meta/
+*.crt
+*.cert

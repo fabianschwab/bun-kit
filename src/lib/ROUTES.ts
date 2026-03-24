@@ -11,15 +11,17 @@
 const PAGES = {
   "/": `/`,
   "/dashboard": `/dashboard`,
-  "/dashboard/one": `/dashboard/one`,
-  "/dashboard/tasks": `/dashboard/tasks`
+  "/dashboard/examples": `/dashboard/examples`,
+  "/dashboard/examples/show-temp": `/dashboard/examples/show-temp`,
+  "/dashboard/tasks": `/dashboard/tasks`,
+  "/dashboard/token": `/dashboard/token`
 }
 
 /**
  * SERVERS
  */
 const SERVERS = {
-  
+  "GET /api/stream/temperature": `/api/stream/temperature`
 }
 
 /**
@@ -141,8 +143,8 @@ export function route<T extends keyof AllTypes>(key: T, ...params: any[]): strin
 * ```
 */
 export type KIT_ROUTES = {
-  PAGES: { '/': never, '/dashboard': never, '/dashboard/one': never, '/dashboard/tasks': never }
-  SERVERS: Record<string, never>
+  PAGES: { '/': never, '/dashboard': never, '/dashboard/examples': never, '/dashboard/examples/show-temp': never, '/dashboard/tasks': never, '/dashboard/token': never }
+  SERVERS: { 'GET /api/stream/temperature': never }
   ACTIONS: Record<string, never>
   LINKS: Record<string, never>
   Params: Record<string, never>

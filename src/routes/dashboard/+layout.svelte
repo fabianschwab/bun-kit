@@ -41,6 +41,7 @@
 			</div>
 			<HeaderPanelLinks>
 				<HeaderPanelDivider>Quick Settings</HeaderPanelDivider>
+				<HeaderPanelLink href={route('/dashboard/token')}>Show JWT</HeaderPanelLink>
 				<HeaderPanelLink href={route('/dashboard/tasks')}>Tasks</HeaderPanelLink>
 			</HeaderPanelLinks>
 		</HeaderAction>

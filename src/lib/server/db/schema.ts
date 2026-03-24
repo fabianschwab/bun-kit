@@ -21,4 +21,14 @@ export const task = pgTable('task', {
 	...timestamps
 });
 
+export const jwks = pgTable('jwks', {
+	id: text('id').primaryKey(),
+	publicKey: text('public_key').notNull(),
+	privateKey: text('private_key').notNull(),
+	createdAt: timestamp('created_at', { mode: 'date' })
+		.notNull()
+		.default(sql`now()`),
+	expiresAt: timestamp('expires_at', { mode: 'date' })
+});
+
 export * from './auth.schema';

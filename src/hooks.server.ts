@@ -31,8 +31,6 @@ export const handle: Handle = handleBetterAuth;
 export const init: ServerInit = async () => {
 	console.log('Application startup ...');
 	await checkConnection();
-	console.log('Database connection established.');
-	console.log('Checking schema and running migrations if needed...');
 	await checkSchema();
-	console.log('Schema is ready.');
+	console.log('Application startup complete');
 };
