@@ -1,7 +1,12 @@
 import { TemperatureSimulator } from '$lib/server/simulator';
 import type { RequestHandler } from '@sveltejs/kit';
+import { error } from '@sveltejs/kit';
 
-export const GET: RequestHandler = async () => {
+export const GET: RequestHandler = async ({ locals }) => {
+	// Check if user is authenticated
+	if (!locals.user || !locals.session) {
+		error(401, 'Unauthorized - Authentication required');
+	}
 	const simulator = new TemperatureSimulator();
 
 	const stream = new ReadableStream({
