@@ -1,28 +1,18 @@
 version: '3.8'
 
 services:
-  app:
-    build:
-      context: .
-      dockerfile: Dockerfile
-    ports:
-      - "3000:3000"
-    volumes:
-      # Mount the local.db file to persist database data
-      - ./data/local.db:/usr/src/app/local.db:rw
-      # Mount a directory for the database instead of a single file
-      - ./data:/usr/src/app/data
+  postgres:
+    image: postgres:16
+    container_name: postgres
+    restart: no
     environment:
-      - ORIGIN=http://localhost:3000
-      # Database configuration
-      - DATABASE_URL=${DATABASE_URL:-local.db}
-      # Better Auth configuration
-      - BETTER_AUTH_SECRET=${BETTER_AUTH_SECRET}
-      # IBM AppID OAuth configuration
-      - OAUTH_CLIENT_ID=${OAUTH_CLIENT_ID}
-      - OAUTH_CLIENT_SECRET=${OAUTH_CLIENT_SECRET}
-      - OAUTH_DISCOVERY_URL=${OAUTH_DISCOVERY_URL}
-    env_file:
-      # Load environment variables from .env file
-      - .env
-    restart: unless-stopped
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: app
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+volumes:
+  postgres_data:

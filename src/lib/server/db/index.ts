@@ -19,16 +19,21 @@ function initializeDb() {
 	if (dbInstance) return dbInstance;
 
 	try {
-		// Read the certificate file at runtime
-		const certPath = join(process.cwd(), '/cert/postgresql.crt');
-		const cert = readFileSync(certPath, 'utf8');
+		// Check if connection is TLS secured
+		let tls = undefined;
+		if (env.DATABASE_URL.includes('sslmode=verify-full')) {
+			// Read the certificate file at runtime
+			const certPath = join(process.cwd(), '/cert/postgresql.crt');
+			const cert = readFileSync(certPath, 'utf8');
+			tls = {
+				ca: cert,
+				rejectUnauthorized: true
+			};
+		}
 
 		// Configure PostgreSQL connection with SSL certificate
 		pg = new SQL(env.DATABASE_URL, {
-			tls: {
-				ca: cert,
-				rejectUnauthorized: true
-			}
+			tls
 		});
 		dbInstance = drizzle(pg, { schema });
 		return dbInstance;
