@@ -21,3 +21,20 @@
 		@import 'carbon-components-svelte/css/white.css' layer(carbon);
 	}
 }
+
+::view-transition-old(root) {
+	animation: none;
+}
+
+::view-transition-new(root) {
+	animation: diagonal 800ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+@keyframes diagonal {
+	from {
+		clip-path: polygon(100% 100%, 100% 100%, 100% 100%);
+	}
+	to {
+		clip-path: polygon(-100% 100%, 100% 100%, 100% -100%);
+	}
+}

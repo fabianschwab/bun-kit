@@ -4,15 +4,17 @@
 
 	// when the theme changes, update the cookie and the html data tag DaisyUI uses to determine the theme
 	function changeTheme(selection: string) {
-		if (selection) {
-			document.cookie = `theme=${selection}; max-age=${60 * 60 * 24 * 365}; path=/; SameSite=Lax`;
-			document.documentElement.setAttribute('theme', selection);
-			localStorage.setItem('theme', selection);
-		} else {
-			document.cookie = `theme=''; max-age=0; path=/; SameSite=Lax`;
-			document.documentElement.setAttribute('theme', '');
-			localStorage.removeItem('theme');
-		}
+		document.startViewTransition(() => {
+			if (selection) {
+				document.cookie = `theme=${selection}; max-age=${60 * 60 * 24 * 365}; path=/; SameSite=Lax`;
+				document.documentElement.setAttribute('theme', selection);
+				localStorage.setItem('theme', selection);
+			} else {
+				document.cookie = `theme=''; max-age=0; path=/; SameSite=Lax`;
+				document.documentElement.setAttribute('theme', '');
+				localStorage.removeItem('theme');
+			}
+		});
 	}
 
 	let theme = $state('');
