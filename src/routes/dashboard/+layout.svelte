@@ -18,6 +18,7 @@
 	import LogoutButton from '$lib/components/LogoutButton.svelte';
 	import NotificationCenter from '$lib/components/NotificationCenter.svelte';
 	import { setNotificationCenterState } from '$lib/components/NotificationCenterState.svelte.js';
+	import ThemeToggle from '$lib/components/ThemeToggle.svelte';
 
 	let { children, data } = $props();
 	let isOpen = $state(false);
@@ -31,6 +32,7 @@
 		<SkipToContent />
 	</svelte:fragment>
 	<HeaderUtilities>
+		<ThemeToggle />
 		<HeaderAction icon={UserAvatarFilledAlt} class="flex items-center justify-center" bind:isOpen>
 			<div class="felx m-4">
 				<div>
