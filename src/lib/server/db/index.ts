@@ -19,7 +19,7 @@ function initializeDb() {
 	if (dbInstance) return dbInstance;
 
 	try {
-		// Check if connection is TLS secured
+		// Check if connection is TLS secured, only read the certificate if it is required
 		let tls = undefined;
 		if (env.DATABASE_URL.includes('sslmode=verify-full')) {
 			// Read the certificate file at runtime

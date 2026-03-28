@@ -4,6 +4,25 @@ import { getAuth } from '$lib/server/auth';
 import { svelteKitHandler } from 'better-auth/svelte-kit';
 import '$lib/server/shutdown';
 import { checkConnection, checkSchema } from '$lib/server/db';
+import { sequence } from '@sveltejs/kit/hooks';
+
+/**
+ * Sets the theme from the cookie directly into the `html` tag, before returning it to the browser.
+ * This prevents flashing or flickering after a refresh or  re-visit of the page.
+ */
+const setThemeFromCookie: Handle = async ({ event, resolve }) => {
+	const themeFromCookie = event.cookies.get('theme');
+
+	if (!themeFromCookie) {
+		return await resolve(event);
+	}
+
+	return await resolve(event, {
+		transformPageChunk: ({ html }) => {
+			return html.replace('theme=""', `theme="${themeFromCookie}"`);
+		}
+	});
+};
 
 const handleBetterAuth: Handle = async ({ event, resolve }) => {
 	const auth = getAuth();
@@ -26,7 +45,7 @@ const handleBetterAuth: Handle = async ({ event, resolve }) => {
 	return response;
 };
 
-export const handle: Handle = handleBetterAuth;
+export const handle: Handle = sequence(setThemeFromCookie, handleBetterAuth);
 
 export const init: ServerInit = async () => {
 	console.log('Application startup ...');

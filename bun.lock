@@ -6,7 +6,7 @@
       "name": "bun-kit",
       "dependencies": {
         "carbon-components-svelte": "^0.99.3",
-        "carbon-icons-svelte": "^13.8.0",
+        "carbon-icons-svelte": "^13.10.0",
         "carbon-pictograms-svelte": "^13.14.0",
         "drizzle-orm": "^0.45.1",
         "postgres": "^3.4.8",
@@ -375,7 +375,7 @@
 
     "carbon-components-svelte": ["carbon-components-svelte@0.99.3", "", { "dependencies": { "@ibm/telemetry-js": "^1.5.0", "flatpickr": "4.6.9" } }, "sha512-AnaA4kJKQ7iDTet2BLJoMWoA6BVGwlYC/ZBdCOeNwBY3YzAoi0bHt6oH6sSesl64nV5oR8lZmKLTra21mMjD2Q=="],
 
-    "carbon-icons-svelte": ["carbon-icons-svelte@13.8.0", "", {}, "sha512-1sTbSOhiKjs7BXj2Ctk6tekSNX4DLUy9miNeYaQK/jeveM4x/+et09JH8xnrwRE1QseLdRd3sOoVwqPZEYsdkA=="],
+    "carbon-icons-svelte": ["carbon-icons-svelte@13.10.0", "", {}, "sha512-gjHuvxYIKWe97aabVoFcSed3eOXLUEccoLmn1M29n6JPF8NGtOOIj/wkihR3Vc/2UERNH1gSdtHJKgMXsD352A=="],
 
     "carbon-pictograms-svelte": ["carbon-pictograms-svelte@13.14.0", "", {}, "sha512-rCfQWP4c+E0tVkJNfVeUbHoVI8EtJFMV6VFcKoUsDsF42zHCaGWHBsFCbQfBExf8kaKpqr+hK8BbAeylYIofXw=="],
 

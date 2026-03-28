@@ -2,27 +2,22 @@
 
 @import 'tailwindcss/theme.css' layer(theme);
 @import 'tailwindcss/preflight.css' layer(base);
+@import 'carbon-components-svelte/css/all.css' layer(components);
 @import 'tailwindcss/utilities.css' layer(utilities);
 
 :root {
 	color-scheme: light dark;
 }
-/* System prefers dark → Carbon g90 */
-@media (prefers-color-scheme: dark) {
-	:root {
-		color-scheme: dark;
-	}
 
-	html {
-		/* Carbon dark theme */
+/* System Theme */
+@media (prefers-color-scheme: dark) {
+	html[theme=''] {
 		@import 'carbon-components-svelte/css/g100.css' layer(carbon);
 	}
 }
 
-/* System prefers light → Carbon white */
 @media (prefers-color-scheme: light) {
-	html {
-		/* Carbon light theme */
+	html[theme=''] {
 		@import 'carbon-components-svelte/css/white.css' layer(carbon);
 	}
 }
