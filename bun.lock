@@ -5,7 +5,7 @@
     "": {
       "name": "bun-kit",
       "dependencies": {
-        "carbon-components-svelte": "^0.99.3",
+        "carbon-components-svelte": "^0.105.0",
         "carbon-icons-svelte": "^13.10.0",
         "carbon-pictograms-svelte": "^13.14.0",
         "drizzle-orm": "^0.45.1",
@@ -373,7 +373,7 @@
 
     "callsites": ["callsites@3.1.0", "", {}, "sha512-P8BjAsXvZS+VIDUI11hHCQEv74YT67YUi5JJFNWIqL235sBmjX4+qx9Muvls5ivyNENctx46xQLQ3aTuE7ssaQ=="],
 
-    "carbon-components-svelte": ["carbon-components-svelte@0.99.3", "", { "dependencies": { "@ibm/telemetry-js": "^1.5.0", "flatpickr": "4.6.9" } }, "sha512-AnaA4kJKQ7iDTet2BLJoMWoA6BVGwlYC/ZBdCOeNwBY3YzAoi0bHt6oH6sSesl64nV5oR8lZmKLTra21mMjD2Q=="],
+    "carbon-components-svelte": ["carbon-components-svelte@0.105.0", "", { "dependencies": { "@ibm/telemetry-js": "^1.5.0", "flatpickr": "4.6.9" } }, "sha512-jamac2ANUq/uzuRtrqCMvLMGb13LeCutj9ECC4CIeFD7LVDp51O8XY7V4N9Fj4yBymFoahY9g51R8WuqRkkhQQ=="],
 
     "carbon-icons-svelte": ["carbon-icons-svelte@13.10.0", "", {}, "sha512-gjHuvxYIKWe97aabVoFcSed3eOXLUEccoLmn1M29n6JPF8NGtOOIj/wkihR3Vc/2UERNH1gSdtHJKgMXsD352A=="],
 

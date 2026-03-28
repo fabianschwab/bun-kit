@@ -24,25 +24,34 @@
 
 {#if theme === 'white'}
 	<Button
+		kind="ghost"
+		icon={Sun}
+		hideTooltip
 		on:click={() => {
 			theme = 'g100';
 			changeTheme('g100');
-		}}><Sun /></Button
-	>
+		}}
+	/>
 {/if}
 {#if theme === ''}
 	<Button
+		kind="ghost"
+		icon={ColorPicker}
+		hideTooltip
 		on:click={() => {
 			theme = 'white';
 			changeTheme('white');
-		}}><ColorPicker /></Button
-	>
+		}}
+	/>
 {/if}
 {#if theme === 'g100'}
 	<Button
+		kind="ghost"
+		icon={Moon}
+		hideTooltip
 		on:click={() => {
 			theme = '';
 			changeTheme('');
-		}}><Moon /></Button
-	>
+		}}
+	/>
 {/if}

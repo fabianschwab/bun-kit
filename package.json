@@ -47,7 +47,7 @@
 		"vite-plugin-kit-routes": "^1.0.2"
 	},
 	"dependencies": {
-		"carbon-components-svelte": "^0.99.3",
+		"carbon-components-svelte": "^0.105.0",
 		"carbon-icons-svelte": "^13.10.0",
 		"carbon-pictograms-svelte": "^13.14.0",
 		"drizzle-orm": "^0.45.1",
