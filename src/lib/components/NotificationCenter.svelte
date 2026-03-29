@@ -1,11 +1,11 @@
 <script lang="ts">
-	import { getNotificationCenterState } from '$lib/components/NotificationCenterState.svelte';
+	import { getNotificationCenterStore } from '$lib/stores/notificationCenterStore.svelte';
 	import { ToastNotification } from 'carbon-components-svelte';
 	import { fly } from 'svelte/transition';
-	import { backIn, backOut, cubicOut } from 'svelte/easing';
+	import { backOut } from 'svelte/easing';
 	import { flip } from 'svelte/animate';
 
-	const notificationCenterState = getNotificationCenterState();
+	const notificationCenterStore = getNotificationCenterStore();
 
 	let {
 		position = 'top-right',
@@ -23,7 +23,7 @@
 	style:bottom={position === 'bottom-right' ? offsetBottom : undefined}
 	style:z-index={zIndex}
 >
-	{#each notificationCenterState.notifications as notification (notification.id)}
+	{#each notificationCenterStore.notifications as notification (notification.id)}
 		<div
 			animate:flip={{ delay: 200, duration: 50 }}
 			in:fly={{
@@ -40,7 +40,7 @@
 		>
 			<ToastNotification
 				{...notification}
-				on:close={() => notificationCenterState.removeNotification(notification.id!)}
+				on:close={() => notificationCenterStore.removeNotification(notification.id!)}
 			/>
 		</div>
 	{/each}

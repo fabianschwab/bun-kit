@@ -5,7 +5,7 @@
 	import { TrashCan } from 'carbon-icons-svelte';
 	import { FaceMelting } from 'carbon-pictograms-svelte';
 	import { isHttpError } from '@sveltejs/kit';
-	import { getNotificationCenterState } from '$lib/components/NotificationCenterState.svelte';
+	import { getNotificationCenterStore } from '$lib/stores/notificationCenterStore.svelte';
 
 	async function handleDeleteTask(id: string) {
 		try {
@@ -32,7 +32,7 @@
 		}
 	}
 
-	let center = getNotificationCenterState();
+	let center = getNotificationCenterStore();
 </script>
 
 <h1>Tasks</h1>

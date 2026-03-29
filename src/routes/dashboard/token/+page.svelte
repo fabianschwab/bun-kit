@@ -2,10 +2,10 @@
 	import { Copy } from 'carbon-icons-svelte';
 	import type { PageProps } from './$types';
 	import { Button } from 'carbon-components-svelte';
-	import { getNotificationCenterState } from '$lib/components/NotificationCenterState.svelte';
+	import { getNotificationCenterStore } from '$lib/stores/notificationCenterStore.svelte';
 	let { data }: PageProps = $props();
 
-	let center = getNotificationCenterState();
+	let center = getNotificationCenterStore();
 
 	function copyToClipboard() {
 		navigator.clipboard.writeText(data.token || '');

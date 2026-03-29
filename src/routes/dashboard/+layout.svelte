@@ -17,14 +17,14 @@
 	import { UserAvatarFilledAlt } from 'carbon-icons-svelte';
 	import LogoutButton from '$lib/components/LogoutButton.svelte';
 	import NotificationCenter from '$lib/components/NotificationCenter.svelte';
-	import { setNotificationCenterState } from '$lib/components/NotificationCenterState.svelte.js';
+	import { setNotificationCenterStore } from '$lib/stores/notificationCenterStore.svelte.js';
 	import ThemeToggle from '$lib/components/ThemeToggle.svelte';
 
 	let { children, data } = $props();
 	let isOpen = $state(false);
 
 	// Initate the global notification center
-	setNotificationCenterState();
+	setNotificationCenterStore();
 </script>
 
 <Header href={route('/')} companyName="IBM" platformName="Carbon Svelte">

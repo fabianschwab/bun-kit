@@ -15,7 +15,7 @@ export type Notification = {
 	hideCloseButton?: boolean;
 };
 
-class NotificationCenterState {
+class NotificationCenterStore {
 	notifications = $state<Notification[]>([]);
 	idCounter = $state(0);
 	showInReverse = $state(false);
@@ -52,12 +52,12 @@ class NotificationCenterState {
 	}
 }
 
-export const getNotificationCenterState = (key = DEFAULT_KEY) => {
-	return getContext<NotificationCenterState>(key);
+export const getNotificationCenterStore = (key = DEFAULT_KEY) => {
+	return getContext<NotificationCenterStore>(key);
 };
 
-export const setNotificationCenterState = (reverse = false, key = DEFAULT_KEY) => {
-	const notificationCenter = new NotificationCenterState();
+export const setNotificationCenterStore = (reverse = false, key = DEFAULT_KEY) => {
+	const notificationCenter = new NotificationCenterStore();
 	notificationCenter.showInReverse = reverse;
 	return setContext(key, notificationCenter);
 };
