@@ -1,6 +1,9 @@
 <script lang="ts">
 	import { getNotificationCenterState } from '$lib/components/NotificationCenterState.svelte';
 	import { ToastNotification } from 'carbon-components-svelte';
+	import { fly } from 'svelte/transition';
+	import { backIn, backOut, cubicOut } from 'svelte/easing';
+	import { flip } from 'svelte/animate';
 
 	const notificationCenterState = getNotificationCenterState();
 
@@ -13,19 +16,32 @@
 	} = $props();
 </script>
 
-{#if notificationCenterState.notifications.length > 0}
-	<div
-		style:position="fixed"
-		style:right={offsetRight}
-		style:top={position === 'top-right' ? offsetTop : undefined}
-		style:bottom={position === 'bottom-right' ? offsetBottom : undefined}
-		style:z-index={zIndex}
-	>
-		{#each notificationCenterState.notifications as notification (notification.id)}
+<div
+	style:position="fixed"
+	style:right={offsetRight}
+	style:top={position === 'top-right' ? offsetTop : undefined}
+	style:bottom={position === 'bottom-right' ? offsetBottom : undefined}
+	style:z-index={zIndex}
+>
+	{#each notificationCenterState.notifications as notification (notification.id)}
+		<div
+			animate:flip={{ delay: 200, duration: 50 }}
+			in:fly={{
+				delay: 300,
+				duration: 300,
+				easing: backOut,
+				x: 100
+			}}
+			out:fly={{
+				duration: 100,
+				easing: backOut,
+				x: 100
+			}}
+		>
 			<ToastNotification
 				{...notification}
 				on:close={() => notificationCenterState.removeNotification(notification.id!)}
 			/>
-		{/each}
-	</div>
-{/if}
+		</div>
+	{/each}
+</div>

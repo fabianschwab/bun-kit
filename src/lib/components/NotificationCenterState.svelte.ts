@@ -28,9 +28,9 @@ class NotificationCenterState {
 		}
 
 		if (this.showInReverse) {
-			this.notifications.push({ ...notification, id });
-		} else {
 			this.notifications = [{ ...notification, id }, ...this.notifications];
+		} else {
+			this.notifications.push({ ...notification, id });
 		}
 
 		return id;
