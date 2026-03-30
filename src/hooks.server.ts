@@ -2,9 +2,9 @@ import type { Handle, ServerInit } from '@sveltejs/kit';
 import { building } from '$app/environment';
 import { getAuth } from '$lib/server/auth';
 import { svelteKitHandler } from 'better-auth/svelte-kit';
-import '$lib/server/shutdown';
-import { checkConnection, checkSchema } from '$lib/server/db';
 import { sequence } from '@sveltejs/kit/hooks';
+import { startup } from '$lib/server/startup';
+import '$lib/server/shutdown';
 
 /**
  * Sets the theme from the cookie directly into the `html` tag, before returning it to the browser.
@@ -48,8 +48,5 @@ const handleBetterAuth: Handle = async ({ event, resolve }) => {
 export const handle: Handle = sequence(setThemeFromCookie, handleBetterAuth);
 
 export const init: ServerInit = async () => {
-	console.log('Application startup ...');
-	await checkConnection();
-	await checkSchema();
-	console.log('Application startup complete');
+	await startup();
 };

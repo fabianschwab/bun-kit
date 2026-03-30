@@ -3,12 +3,9 @@ import { SQL } from 'bun';
 import { sql } from 'drizzle-orm';
 import { migrate } from 'drizzle-orm/bun-sql/migrator';
 import * as schema from './schema';
-import { env } from '$env/dynamic/private';
-import { building } from '$app/environment';
+import { getEnv } from '$lib/server/env';
 import { readFileSync } from 'fs';
 import { join } from 'path';
-
-if (!building && !env.DATABASE_URL) throw new Error('DATABASE_URL is not set');
 
 // Lazy initialization of database connection to mitigate issues while building the application.
 // The connection will be established when the first query is executed.
@@ -18,6 +15,7 @@ let dbInstance: ReturnType<typeof drizzle> | null = null;
 function initializeDb() {
 	if (dbInstance) return dbInstance;
 
+	const env = getEnv();
 	try {
 		// Check if connection is TLS secured, only read the certificate if it is required
 		let tls = undefined;
@@ -38,9 +36,8 @@ function initializeDb() {
 		dbInstance = drizzle(pg, { schema });
 		return dbInstance;
 	} catch (error) {
-		console.error('Error reading SSL certificate:', error);
-		// Terminate application
-		process.exit(1);
+		console.error(error);
+		throw new Error('Error reading SSL certificate');
 	}
 }
 
@@ -51,15 +48,21 @@ export const db = new Proxy({} as ReturnType<typeof drizzle>, {
 	}
 });
 
-export async function checkConnection(): Promise<void> {
+export async function checkConnection(retries = 3, delayMs = 1000): Promise<void> {
 	console.log('Checking database connection...');
-	try {
-		await db.execute(sql`SELECT 1`);
-		console.log('Database connection successful');
-	} catch (error) {
-		console.error('Database connection error:', error);
-		// Terminate application
-		process.exit(1);
+	for (let i = 0; i < retries; i++) {
+		try {
+			await db.execute(sql`SELECT 1`);
+			console.log('Database connection successful');
+			return;
+		} catch (err) {
+			console.warn(`Attempt ${i + 1} failed: ${(err as Error).message}`);
+			if (i < retries - 1) {
+				await new Promise((r) => setTimeout(r, delayMs));
+			} else {
+				throw new Error(`Database connection error after ${retries} attempts`);
+			}
+		}
 	}
 }
 
@@ -76,20 +79,24 @@ export async function checkTableExists(tableName: string): Promise<boolean> {
 
 export async function checkSchema(): Promise<void> {
 	try {
-		// Check if migrations table exists
+		const migrationsFolder = './drizzle';
 		const hasMigrations = await checkTableExists('__drizzle_migrations');
 
 		if (!hasMigrations) {
-			console.log('Running initial migrations...');
-			await migrate(db, { migrationsFolder: './drizzle' });
-			console.log('Migrations completed successfully');
+			console.log('Initial migrations detected. Running initial migrations...');
 		} else {
-			// Run any pending migrations
-			await migrate(db, { migrationsFolder: './drizzle' });
+			console.log('Running pending migrations (if any)...');
+		}
+
+		await migrate(db, { migrationsFolder });
+
+		if (!hasMigrations) {
+			console.log('Initial migrations completed successfully');
+		} else {
 			console.log('Schema is up to date');
 		}
 	} catch (error) {
-		console.error('Error checking/creating schema:', error);
-		throw error;
+		console.error('Error checking or creating schema:', error);
+		throw new Error(`Schema migration failed: ${(error as Error).message}`);
 	}
 }

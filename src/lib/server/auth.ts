@@ -1,33 +1,30 @@
 import { betterAuth } from 'better-auth';
 import { drizzleAdapter } from 'better-auth/adapters/drizzle';
 import { sveltekitCookies } from 'better-auth/svelte-kit';
-import { env } from '$env/dynamic/private';
 import { getRequestEvent } from '$app/server';
 import { db } from '$lib/server/db';
 import { genericOAuth } from 'better-auth/plugins/generic-oauth';
 import { jwt, openAPI } from 'better-auth/plugins';
+import { getEnv } from '$lib/server/env';
 
 let _auth: ReturnType<typeof betterAuth> | null = null;
 export function getAuth() {
 	if (_auth) return _auth;
 
-	const secret = env.BETTER_AUTH_SECRET;
-	if (!secret) {
-		throw new Error('BETTER_AUTH_SECRET is not set');
-	}
+	const env = getEnv();
 
 	_auth = betterAuth({
 		baseURL: env.ORIGIN,
 		secret: env.BETTER_AUTH_SECRET,
-		database: drizzleAdapter(db, { provider: 'sqlite' }),
+		database: drizzleAdapter(db, { provider: 'pg' }),
 		plugins: [
 			genericOAuth({
 				config: [
 					{
 						providerId: 'appid',
-						clientId: env.OAUTH_CLIENT_ID as string,
-						clientSecret: env.OAUTH_CLIENT_SECRET as string,
-						discoveryUrl: env.OAUTH_DISCOVERY_URL as string
+						clientId: env.OAUTH_CLIENT_ID,
+						clientSecret: env.OAUTH_CLIENT_SECRET,
+						discoveryUrl: env.OAUTH_DISCOVERY_URL
 					}
 				]
 			}),
