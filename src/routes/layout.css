@@ -32,9 +32,11 @@
 
 @keyframes diagonal {
 	from {
-		clip-path: polygon(100% 100%, 100% 100%, 100% 100%);
+		/* clip-path: polygon(100% 100%, 100% 100%, 100% 100%); */
+		clip-path: polygon(100% 0%, 100% 0%, 100% 0%);
 	}
 	to {
-		clip-path: polygon(-100% 100%, 100% 100%, 100% -100%);
+		/* clip-path: polygon(-100% 100%, 100% 100%, 100% -100%); */
+		clip-path: polygon(100% 200%, -100% 0%, 100% -100%);
 	}
 }
