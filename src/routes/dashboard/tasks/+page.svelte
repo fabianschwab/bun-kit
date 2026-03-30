@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { Button, Checkbox, Form, InlineLoading, TextInput, Tile } from 'carbon-components-svelte';
 
-	import { createTask, deleteTask, getTasks, toggleComplated } from '$lib/rpc/tasks.remote';
+	import { createTask, deleteTask, getTasks, toggleCompleted } from '$lib/rpc/tasks.remote';
 	import { TrashCan } from 'carbon-icons-svelte';
 	import { FaceMelting } from 'carbon-pictograms-svelte';
 	import { isHttpError } from '@sveltejs/kit';
@@ -78,7 +78,7 @@
 				<Checkbox
 					class="max-w-fit"
 					checked={completed}
-					on:check={() => toggleComplated(id).updates(getTasks())}
+					on:check={() => toggleCompleted(id).updates(getTasks())}
 				/>
 				<div>
 					<p>{title}</p>
