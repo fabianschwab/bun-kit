@@ -25,14 +25,15 @@
 >
 	{#each notificationCenterStore.notifications as notification (notification.id)}
 		<div
-			animate:flip={{ delay: 200, duration: 50 }}
+			animate:flip
 			in:fly={{
-				delay: 300,
-				duration: 300,
+				delay: 100,
+				duration: 100,
 				easing: backOut,
 				x: 100
 			}}
 			out:fly={{
+				delay: 60,
 				duration: 100,
 				easing: backOut,
 				x: 100
