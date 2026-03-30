@@ -3,7 +3,7 @@ import { db } from '$lib/server/db';
 import { z } from 'zod/mini';
 import { task } from '$lib/server/db/schema';
 import { eq, asc } from 'drizzle-orm';
-import { error, redirect } from '@sveltejs/kit';
+import { error, isHttpError, redirect } from '@sveltejs/kit';
 import { route } from '$lib/ROUTES';
 
 function requireAuthentication() {
@@ -17,8 +17,13 @@ function requireAuthentication() {
 
 export const getTasks = query(async () => {
 	requireAuthentication();
-	const tasks = await db.select().from(task).orderBy(asc(task.createdAt));
-	return tasks;
+	try {
+		const tasks = await db.select().from(task).orderBy(asc(task.createdAt));
+		return tasks;
+	} catch (e) {
+		console.error(e);
+		error(500, 'Could not fetch tasks.');
+	}
 });
 
 export const createTask = form(
@@ -36,20 +41,38 @@ export const createTask = form(
 	}
 );
 
-export const toggleComplated = command(z.string(), async (id) => {
+export const toggleCompleted = command(z.string(), async (id) => {
 	requireAuthentication();
-	const [taskToUpdate] = await db.select().from(task).where(eq(task.id, id));
-	if (!taskToUpdate) {
-		error(404, 'Could not update task. Task not found.');
+	try {
+		const [taskToUpdate] = await db.select().from(task).where(eq(task.id, id));
+		if (!taskToUpdate) {
+			error(404, 'Task not found.');
+		}
+		await db.update(task).set({ completed: !taskToUpdate.completed }).where(eq(task.id, id));
+	} catch (e) {
+		// If it's already an HttpError (from the 404 check), rethrow it
+		if (isHttpError(e)) {
+			throw e;
+		}
+		console.error(e);
+		error(500, 'Could not update task.');
 	}
-	await db.update(task).set({ completed: !taskToUpdate.completed }).where(eq(task.id, id));
 });
 
 export const deleteTask = command(z.string(), async (id) => {
 	requireAuthentication();
-	const [taskToDelete] = await db.select().from(task).where(eq(task.id, id));
-	if (!taskToDelete) {
-		error(404, 'Could not delete task. Task not found.');
+	try {
+		const [taskToDelete] = await db.select().from(task).where(eq(task.id, id));
+		if (!taskToDelete) {
+			error(404, 'Task not found.');
+		}
+		await db.delete(task).where(eq(task.id, id));
+	} catch (e) {
+		// If it's already an HttpError (from the 404 check), rethrow it
+		if (isHttpError(e)) {
+			throw e;
+		}
+		console.error(e);
+		error(500, 'Could not delete task.');
 	}
-	await db.delete(task).where(eq(task.id, id));
 });
