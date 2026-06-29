@@ -43,7 +43,7 @@
 </p>
 <h3>Creaet a new task</h3>
 <Form
-	{...createTask.enhance(async ({ form, data, submit }) => {
+	{...createTask.enhance(async ({ form, submit }) => {
 		try {
 			await submit();
 			form.reset();
@@ -72,7 +72,7 @@
 </Form>
 <h3>Task list</h3>
 <svelte:boundary>
-	{#each await getTasks() as { id, title, completed, updatedAt }}
+	{#each await getTasks() as { id, title, completed, updatedAt } (id)}
 		{#key id}
 			<Tile class="flex items-center  gap-2">
 				<Checkbox
