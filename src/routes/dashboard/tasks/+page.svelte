@@ -41,7 +41,7 @@
 	Also this serves you as a guide, how to use remote functions, forms, loading states, and using
 	tailwindcss when creating custom css classes.
 </p>
-<h3>Creaet a new task</h3>
+<h3>Create a new task</h3>
 <Form
 	{...createTask.enhance(async ({ form, submit }) => {
 		try {
@@ -63,6 +63,7 @@
 				caption: new Date().toDateString(),
 				timeout: 1500
 			});
+			console.error(e);
 		}
 	})}
 	class="flex items-end"
